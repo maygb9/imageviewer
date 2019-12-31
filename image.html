@@ -11,10 +11,6 @@ img:hover {
 cursor: zoom-in;
 }
 </style>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <link  href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.5.0/viewer.css" rel="stylesheet">
     <title>Using FileReader API with HTML5 Canvas</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -25,7 +21,7 @@ cursor: zoom-in;
     Resize Image to: <input type="text" style="width:50px;" value="20" id="size" /> %
 
     <p><input type="file" id="file" multiple /></p>
-    <div src="" id="img" class="img-thumbnail" ondblclick="myFunction()"></div>
+    <div src="" id="img" ondblclick="previewFn()"></div>
 </body>
 
 <script>
@@ -56,8 +52,8 @@ cursor: zoom-in;
                             canvas.width = img.width;
                             canvas.height = img.height;
                             ctx.drawImage(img, 0, 0, img.width, img.height);
-							//img.id = 'one';
-							img.class="img-thumbnail";
+							
+							//img.class="img-thumbnail";
                             $('#img').append(img);      // SHOW THE IMAGES OF THE BROWSER.
 
                             // AUTO DOWNLOAD THE IMAGES, ONCES RESIZED.
@@ -79,7 +75,7 @@ cursor: zoom-in;
 	// View a list of images
 const gallery = new Viewer(document.getElementById('img'));
 
-function myFunction(){
+function previewFn(){
 gallery.update();
 }
 </script>

@@ -1,0 +1,86 @@
+<html>
+<head>
+<style>
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+cursor: zoom-in;
+}
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.5.0/viewer.css" rel="stylesheet">
+    <title>Using FileReader API with HTML5 Canvas</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	
+	<script type="text/javascript" src="viewer.js"></script>
+</head>
+<body>
+    Resize Image to: <input type="text" style="width:50px;" value="20" id="size" /> %
+
+    <p><input type="file" id="file" multiple /></p>
+    <div src="" id="img" class="img-thumbnail" ondblclick="myFunction()"></div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#file').change(function () {
+            if (this.files.length > 0) {
+
+                $.each(this.files, function (i, v) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.src = e.target.result;
+
+                        img.onload = function () {
+
+                            // CREATE A CANVAS ELEMENT AND ASSIGN THE IMAGES TO IT.
+                            var canvas = document.createElement("canvas");
+
+                            var value = $('#size').val();
+
+                            // RESIZE THE IMAGES ONE BY ONE.
+                            img.width = (img.width * value) / 100
+                            img.height = (img.height * value) / 100
+
+                            var ctx = canvas.getContext("2d");
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            ctx.drawImage(img, 0, 0, img.width, img.height);
+							//img.id = 'one';
+							img.class="img-thumbnail";
+                            $('#img').append(img);      // SHOW THE IMAGES OF THE BROWSER.
+
+                            // AUTO DOWNLOAD THE IMAGES, ONCES RESIZED.
+                            //var a = document.createElement('a');
+                            //a.href = canvas.toDataURL("image/png");
+                            //a.download = 'sample.jpg';
+                            //document.body.appendChild(a);
+                            //a.click();
+                        }
+                    };
+                    reader.readAsDataURL(this);
+					
+                });
+            }
+        });
+    });
+	
+
+	// View a list of images
+const gallery = new Viewer(document.getElementById('img'));
+
+function myFunction(){
+gallery.update();
+}
+</script>
+</html>
